@@ -1,6 +1,16 @@
 const cheerio = require("cheerio");
 const axios = require("axios");
 
+function trimByWord(sentence) {
+  var result = sentence;
+  var resultArray = result.split(' ');
+  if(resultArray.length > 10){
+  resultArray = resultArray.slice(0, 10);
+  result = resultArray.join(' ') + '…';
+  }
+  return result;
+  }
+
 module.exports = function(app){
 
   app.get("/", function(req, res){
@@ -17,8 +27,10 @@ module.exports = function(app){
           var author = $(element).attr("data-author");
           var title = $(element).find("p").text();
           // console.log(title);
+
+
           results.push({
-            title: title,
+            title: trimByWord(title),
             author: author,
             image: image
           });
