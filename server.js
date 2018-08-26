@@ -50,7 +50,6 @@ app.engine("handlebars",exphbs({defaultLayout: "main"}));
 app.set("view engine", "handlebars");
 
 // Routes
-// require("./routes/apiRoutes")(app);
 // require the router files and pass the router object
 require("./config/routes")(router);
 

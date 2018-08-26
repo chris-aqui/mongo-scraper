@@ -8,6 +8,7 @@ html {
 body {
   min-height: 100%;
   overflow: hidden;
+  /* background-image: url(https://i.redd.it/4xywy3lc5ai11.png); */
 }
 
 .ba {
@@ -123,6 +124,7 @@ body {
   height: 100vh;
   overflow: hidden;
   margin: 0;
+  /* background-image: url(https://i.redd.it/4xywy3lc5ai11.png); */
 }
 
 .itemsCards {

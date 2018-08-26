@@ -10,7 +10,8 @@ const ArticleSchema = new Schema({
   // `title` is required and of type String
   title: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   // `summary` is required and of type String
   author: {
@@ -20,7 +21,8 @@ const ArticleSchema = new Schema({
   // image link
   image: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   // defines whether or not article is saved
   saved: {

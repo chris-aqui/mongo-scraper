@@ -6,6 +6,10 @@ const Schema = mongoose.Schema;
 // Using the Schema constructor, create a new CommentSchema object
 // This is similar to a Sequelize model
 const CommentSchema = new Schema({
+  _articleId:{
+    type: Schema.Types.ObjectId,
+    ref:"Article"
+  },
   // `body` is of type String
   body: {
     type: String,
