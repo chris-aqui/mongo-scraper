@@ -56,7 +56,12 @@ router.delete("/api/delete/:id", function (req, res) {
   query._id = req.params.id;
   articleController.delete(query, function(err, data){
     res.json(data);
+  });
+});
+
+router.patch('/api/post', function(req,res){
+  articleController.update(req.body, function(err, data){
+    res.json(data);
   })
 })
-
 };
