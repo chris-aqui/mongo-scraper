@@ -13,12 +13,7 @@ const ArticleSchema = new Schema({
     required: true
   },
   // `summary` is required and of type String
-  summary: {
-    type: String,
-    required: true
-  },
-  // `link` is required and of type String
-  link: {
+  author: {
     type: String,
     required: true
   },

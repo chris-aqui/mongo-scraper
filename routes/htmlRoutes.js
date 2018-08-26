@@ -13,7 +13,7 @@ function trimByWord(sentence) {
 
 module.exports = function(app){
 
-  app.get("/", function(req, res){
+  app.get("/scrap", function(req, res){
     //
     let results = [];
     axios.get("https://old.reddit.com/r/RoomPorn/").then(response =>{
@@ -27,8 +27,6 @@ module.exports = function(app){
           var author = $(element).attr("data-author");
           var title = $(element).find("p").text();
           // console.log(title);
-
-
           results.push({
             title: trimByWord(title),
             author: author,
@@ -37,12 +35,15 @@ module.exports = function(app){
         });
         console.log(results);
         //
-        res.render("index", {
-          values: results
-        });
+        res.json(results);
     }).catch(function(err) {
       return res.json(err);
     });
-//
   });
+
+app.get("/", function(req, res){
+  res.render("index", {
+    values: req.body
+  });
+});
 }

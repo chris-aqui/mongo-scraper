@@ -1,5 +1,7 @@
-{{!--
-<h1>Testing load</h1> --}}
+<div class="subHeading">
+  <h1>Saved Post</h1>
+  <h4>You can delete post here.</h4>
+</div>
 <div class='itemsCards'>
   {{#each values}}
   <article id="{{this.id}}" class="bg-white mw5 ba b--black-10 mv4">
@@ -12,7 +14,6 @@
       <small class="gray db pv2">{{this.author}}</small>
       <a href="/comments"><small class="gray db pv2">Comments</small></a>
     </div>
-
   </article>
   {{/each}}
 </div>
