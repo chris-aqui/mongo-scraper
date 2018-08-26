@@ -1,5 +1,5 @@
 // get the scrape function from the scripts folder
-import scrape from "../scripts/scrap";
+const scrape = require("../scripts/scrap");
 // get the contollers
 const articleController = require("../controllers/article");
 const commentController = require("../controllers/comment");
@@ -7,7 +7,7 @@ const commentController = require("../controllers/comment");
 
 
 
-export default function (router) {
+module.exports = function (router) {
   // this route renders the index
   router.get("/", function (req, res) {
     res.render("index");
@@ -69,32 +69,30 @@ export default function (router) {
   // on post at that id
   router.get("/api/comments/:article_id", function (req, res) {
     const query = {};
-    if(req.params.article_id){
+    if (req.params.article_id) {
       query.id = req.params.article_id;
     };
     // get post at that id
-    commentController.get(query, function(err,data){
+    commentController.get(query, function (err, data) {
       res.json(data);
     })
   })
 
   // delete post at that id
-  router.delete("/api/post/:id", function(req,res){
+  router.delete("/api/post/:id", function (req, res) {
     const query = {};
     query._id = req.params.id;
-    commentController.delete(query, function(err, data){
+    commentController.delete(query, function (err, data) {
       res.json(data);
     })
   })
+  // time to post
 
-// time to post
-
-
-router.post("api/post", function(req,res){
-  commentController.save(req.body, function(data){
-    res.json(data);
+  router.post("api/post", function (req, res) {
+    commentController.save(req.body, function (data) {
+      res.json(data);
+    });
   });
-});
 
 
 };

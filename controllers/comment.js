@@ -1,6 +1,6 @@
 // bring in the comments script
-import Comment from "../models/Comment";
-import makeDate from "../scripts/date";
+const Comment = require("../models/Comment");
+const makeDate = require("../scripts/date");
 
 module.exports = {
   // add all the comments related to the post

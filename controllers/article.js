@@ -1,8 +1,9 @@
 // bring in the scrape script
-import scrape from "../scripts/scrap";
-import makeDate from "../scripts/date";
+const scrape = require("../scripts/scrap");
 // bring in the model for the article
-import Article from "../models/Article";
+const makeDate = require("../scripts/date");
+const Article = require("../models/Article");
+
 
 module.exports = {
   // fetch will run scrape and insert into db roomrave collection article
