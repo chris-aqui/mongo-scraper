@@ -1,5 +1,5 @@
 const makeData = function() {
-  const d = new Data();
+  const d = new Date();
   const formattedDate = "";
 
   formattedDate += (d.getMonth() + 1) +" ";
