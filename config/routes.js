@@ -20,7 +20,7 @@ export default function (router) {
 
 //  an api route to "fetch" our data fromt he trageted site
 router.get("/api/fetch", function(req,res){
-  // scrape the cite
+  // this is the fetch method define inside the controlers
   articleController.fetch(function(err,docs){
     // check if scrape failed or no new content
     if(!docs || docs.insertedCount ===0 ){
@@ -35,6 +35,28 @@ router.get("/api/fetch", function(req,res){
   });
 });
 
+// take the user request
+router.get("/api/post", function (req,res) {
+  //  query is defined as empty.
+  //  if the user does not uery anything then we retuen all the date.
+  const query = {};
+  //  if theuser picks a specifie post then we returen that
+  if( req.query.saved){
+    query = req.query;
+  }
+  // this is the get method defined it the controller
+  articleController.get(query, function(data){
+    res.json(data);
+  });
 
+});
+
+router.delete("/api/delete/:id", function (req, res) {
+  const query = {};
+  query._id = req.params.id;
+  articleController.delete(query, function(err, data){
+    res.json(data);
+  })
+})
 
 };
