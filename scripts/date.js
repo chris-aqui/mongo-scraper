@@ -1,6 +1,6 @@
-const makeData = function() {
-  const d = new Date();
-  const formattedDate = "";
+let makeData = function() {
+  let d = new Date();
+  let formattedDate = "";
 
   formattedDate += (d.getMonth() + 1) +" ";
   formattedDate += d.getDate() + "_";
