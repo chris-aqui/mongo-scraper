@@ -31,22 +31,24 @@ app.use(bodyParser.urlencoded({
 // require models
 const db = require("./models");
 // if deployed, use the deployed database. otherwire use the local mongo database
-const usedDB = process.env.MONGODB_URL || "mongodb://localhost/roomrave";
+const usedDB = process.env.MONGODB_URI || "mongodb://localhost/roomrave";
 
 // Connect mongoose to our database
-mongoose.connect(usedDB, function(error){
+mongoose.connect(usedDB, {
+  useNewUrlParser: true
+}, function (error, db) {
   // log any errors
-  if (error) {
-    throw error;
-  } else {
-    // show a success message if connected
-    console.log("mongoose connection is good")
-
-  }
+  if (error) throw (`There is a connection error of: ${error}`);
+  // show a success message if connected
+  // console.log("db in server is ", db);
+  console.log(`Mongoose connection to ${usedDB}`);
+  db.close();
 });
 // Routes + Handlebars
 // =============================================================
-app.engine("handlebars",exphbs({defaultLayout: "main"}));
+app.engine("handlebars", exphbs({
+  defaultLayout: "main"
+}));
 app.set("view engine", "handlebars");
 
 // Routes
