@@ -17,7 +17,7 @@ $(document).ready(function () {
     // clear out the webpage
     postContainer.empty();
     // next run an AJAX request and get any saved post
-    $.get('api/post?saved=true').then(function (data) {
+    $.get('/api/post?saved=true').then(function (data) {
       // if data a post was saved  then render it
       if (data && data.length) {
         console.log("There is some saved data ", data);

@@ -70,7 +70,10 @@ module.exports = function (router) {
     // console.log("req.body in the patcher ", req);
     // console.log("*********************" + Object.keys(req));
     // let queryUpdate = req.params.id;
-    articleController.update(req.body, function (err, data) {
+    // let queryUpdate = req.params;
+    let queryUpdate = req.body;
+    console.log("queryUpdate ", queryUpdate);
+    articleController.update(queryUpdate, function (err, data) {
       if (err) throw err;
       res.json(data);
     });
@@ -101,7 +104,7 @@ module.exports = function (router) {
   })
   // time to post
 
-  router.post("api/post", function (req, res) {
+  router.post("/api/post", function (req, res) {
     console.log("posting some data")
     commentController.save(req.body, function (data) {
       res.json(data);

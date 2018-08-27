@@ -15,7 +15,7 @@ $(document).ready(function () {
     // clear out the webpage
     postContainer.empty();
     // next run an AJAX request and get any saved post
-    $.get('api/post?saved=false').then(function (data) {
+    $.get('/api/post?saved=false').then(function (data) {
       // if data a post was saved  then render it
       if (data && data.length) {
         console.log("there is some data in init")
@@ -85,7 +85,7 @@ $(document).ready(function () {
         // console.log(data);
         if (data.ok) {
           console.log("handlePortSave function is working!");
-          initPage();
+          // initPage();
         }
       });
   }
