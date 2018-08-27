@@ -2,7 +2,7 @@
 const scrape = require("../scripts/scrap");
 const makeDate = require("../scripts/date");
 // bring in the model for the article
-const Article = require("../models/Article");
+const Article = require("../models/article");
 
 
 module.exports = {
