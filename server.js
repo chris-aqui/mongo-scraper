@@ -34,19 +34,18 @@ const db = require("./models");
 const usedDB = process.env.MONGODB_URI || "mongodb://localhost/roomrave";
 
 // Connect mongoose to our database
-mongoose.connect(usedDB, function(error){
+mongoose.connect(usedDB, function (error, db) {
   // log any errors
-  if (error) {
-    throw error;
-  } else {
-    // show a success message if connected
-    console.log("mongoose connection is good")
-
-  }
+  if (error) throw error;
+  // show a success message if connected
+  console.log("db in server is ", db);
+  console.log("mongoose connection is good")
 });
 // Routes + Handlebars
 // =============================================================
-app.engine("handlebars",exphbs({defaultLayout: "main"}));
+app.engine("handlebars", exphbs({
+  defaultLayout: "main"
+}));
 app.set("view engine", "handlebars");
 
 // Routes
