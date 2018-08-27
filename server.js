@@ -34,11 +34,13 @@ const db = require("./models");
 const usedDB = process.env.MONGODB_URI || "mongodb://localhost/roomrave";
 
 // Connect mongoose to our database
-mongoose.connect(usedDB, function (error, db) {
+mongoose.connect(usedDB, {
+  useNewUrlParser: true
+}, function (error, db) {
   // log any errors
-  if (error) throw error;
+  if (error) throw (`There is a connection error of: ${error}`);
   // show a success message if connected
-  console.log("db in server is ", db);
+  // console.log("db in server is ", db);
   console.log("mongoose connection is good")
 });
 // Routes + Handlebars
