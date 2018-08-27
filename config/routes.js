@@ -15,6 +15,7 @@ module.exports = function (router) {
 
   // this route rnders the saved page
   router.get("/saved", function (req, res) {
+    // console.log("Looking at the /saved req: ", req.query);
     res.render("saved");
   });
 
@@ -38,12 +39,14 @@ module.exports = function (router) {
 
   // take the user request
   router.get("/api/post", function (req, res) {
+    // console.log(`this is the req in the get method call ${req}`)
     //  query is defined as empty.
-    //  if the user does not uery anything then we retuen all the date.
-    let query = {};
-    //  if theuser picks a specifie post then we returen that
+    //  if the user does not query anything then we return all the date.
+    //  if the user picks a specific post then we return that
+    query = {};
     if (req.query.saved) {
       query = req.query;
+      console.log(`This is the query inside the routes call to the get method ${query}`);
     }
     // this is the get method defined it the controller
     articleController.get(query, function (data) {
@@ -61,10 +64,13 @@ module.exports = function (router) {
     });
   });
 
-  router.patch('/api/post/:id', function (req, res) {
-    console.log("req.body in the patcher ",req.params.id);
-    let queryUpdate = req.params.id;
-    articleController.update(queryUpdate, function(err, data) {
+  router.patch('/api/post', function (req, res) {
+    // console.log("req.body in the patcher ", req.params.id);
+    // console.log("req.body in the patcher ", req.body);
+    // console.log("req.body in the patcher ", req);
+    // console.log("*********************" + Object.keys(req));
+    // let queryUpdate = req.params.id;
+    articleController.update(req.body, function (err, data) {
       if (err) throw err;
       res.json(data);
     });

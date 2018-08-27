@@ -32,6 +32,7 @@ module.exports = {
     // find all the port in the query
     // sort more recent to lest recent
     // pass them to the callback
+    // console.log(`This is the article get method for query: ${query}`)
     Article.find(query)
       .sort({
         _id: -1
@@ -41,7 +42,7 @@ module.exports = {
       })
   },
   update: function (query, cb) {
-    console.log("this method for update with qurey at id:", query);
+    // console.log("this method for update with query at id:", query);
     // update new post scraped with the id
     // update any id passed to the post with tat data
     // aug 27 changed update to updateOne

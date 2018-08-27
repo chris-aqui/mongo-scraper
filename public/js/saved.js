@@ -6,7 +6,7 @@ $(document).ready(function () {
   // events for post/comments being saved and deleted
   $(document).on('click', '.bdelete', handlePostDelete);
   $(document).on('click', '.bcomment', handlePostComment);
-  $(document).on('click', '.bsave', handleCommentsSave);
+  $(document).on('click', '.bsave', handleCommentSave);
   $(document).on('click', '.bcommentDelete', handleCommentDelete);
 
   // next we init the page
@@ -20,11 +20,11 @@ $(document).ready(function () {
     $.get('api/post?saved=true').then(function (data) {
       // if data a post was saved  then render it
       if (data && data.length) {
-        console.log("there is some saved data")
+        console.log("There is some saved data ", data);
         renderPost(data);
       } else {
         // if not then render notting
-        console.log("there is no  saved data")
+        console.log("There is no  saved data")
         renderEmpty();
       }
     });
@@ -34,8 +34,8 @@ $(document).ready(function () {
     // this function will handle the appending HTML for the post
     // passing an array of json with all the post in the db
     let postPanels = [];
-    postPanels.forEach(element => {
-      postPanels.push(createPanel(posts));
+    posts.forEach(element => {
+      postPanels.push(createPanel(element));
     });
     postContainer.append(postPanels);
     console.log("renderPost function is working!");
@@ -68,7 +68,7 @@ $(document).ready(function () {
   //  ////////////////////////////////////////////////////
 
   function renderCommentsList(data) {
-    // rendings the comments for the post
+    // rending the comments for the post
     let commentsToRender = [];
     let currentComment;
     if (!data.post.length) {
@@ -83,10 +83,10 @@ $(document).ready(function () {
         currentComment = $([
           `<li class='list-group-item comment'>
           ${data.post[i].commentText}
-          <buttin class='bcommentDelete'>X</buttin>
+          <button class='bcommentDelete'>X</button>
           </li>`
         ].join(""));
-        // store the coment id on the delete button
+        // store the comment id on the delete button
         currentComment.children("button").data("_id", data.post[i]._id);
         commentsToRender.push(currentComment);
       }
@@ -96,7 +96,7 @@ $(document).ready(function () {
 
 
   function handlePostComment() {
-    // this function hanles the comments modal
+    // this function handles the comments modal
     // displays the notes
     let currentPost = $(this).parents(".panel").data();
     // grab any post with the id
@@ -146,7 +146,7 @@ $(document).ready(function () {
   }
 
 
-  function handleCommentsSave() {
+  function handleCommentSave() {
     //  this function will trigger when the user wants to save a post
     let commentData;
     let newComment = $("bootbox-body comment").val().trim();
@@ -157,18 +157,17 @@ $(document).ready(function () {
       };
       $.post("/api/comments", commentData).then(function () {
         bootbox.hideAll();
-      })
+      });
     }
-
-    console.log("handleCommentsSave function is working!");
+    console.log("handleCommentSave function is working!");
   }
 
   function handleCommentDelete() {
     let commentToDelete = $(this).data("_id");
     $.ajax({
-      url:`/api/comments/${commentToDelete}`,
+      url: `/api/comments/${commentToDelete}`,
       method: "DELETE"
-    }).then(function(){
+    }).then(function () {
       bootbox.hideAll();
     });
   }
