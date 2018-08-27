@@ -39,11 +39,9 @@ module.exports = {
     })
   },
   update: function(query, cb){
-    // console.log("this method for update with qurey ",query);
+    console.log("this method for update with qurey ",query);
     // update new post scraped with the id
     // update any id passed to the post with tat data
-    Article.update({_id: query._id}, {
-      $set: query
-    }, {}, cb);
+    Article.update({_id: query._id}, {$set: {_id: query._id}}, {}, cb);
   }
 }

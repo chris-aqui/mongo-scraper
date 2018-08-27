@@ -61,8 +61,11 @@ module.exports = function (router) {
     });
   });
 
-  router.patch('/api/post', function (req, res) {
-    articleController.update(req.body, function (err, data) {
+  router.patch('/api/post/:id', function (req, res) {
+    console.log("req.body in the patcher ",req.params.id);
+    let queryUpdate = req.params.id;
+    articleController.update(queryUpdate, function(err, data) {
+      if (err) throw err;
       res.json(data);
     });
   });
@@ -93,6 +96,7 @@ module.exports = function (router) {
   // time to post
 
   router.post("api/post", function (req, res) {
+    console.log("posting some data")
     commentController.save(req.body, function (data) {
       res.json(data);
     });

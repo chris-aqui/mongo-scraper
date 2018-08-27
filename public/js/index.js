@@ -75,7 +75,7 @@ $(document).ready(function () {
     // using ajax request, we patch our eisting records inthe collection
     $.ajax({
         method: "PATCH",
-        url: "/api/post",
+        url: `/api/post/${postToSave._id}`,
         data: postToSave
       })
       .then(function (data) {
@@ -84,10 +84,10 @@ $(document).ready(function () {
         //  this obj will have the key "ok" with the value of 1
         // console.log(data);
         if (data.ok) {
+          console.log("handlePortSave function is working!");
           initPage();
         }
       });
-    console.log("handlePortSave function is working!");
   }
 
   function handlePostscrap() {
@@ -101,9 +101,10 @@ $(document).ready(function () {
 
   function createPanel(post) {
     console.log("createPanel function is working!");
+    // console.log('creating the paenl with ', post);
     let panel =
       $([`
-    <article id="${post.id}" class="panel bg-white mw5 ba b--black-10 mv4">
+    <article id="${post._id}" class="panel bg-white mw5 ba b--black-10 mv4">
     <div class="pv2 ph3">
       <h1 class="f6 ttu tracked"></h1>
     </div>
@@ -111,9 +112,10 @@ $(document).ready(function () {
     <div class="pa3">
       <h3 href="#" class="link dim lh-title">${post.title}</h3>
       <small class="gray db pv2">By: ${post.author}</small>
-      <a class='bsave'><small class="gray db pv2 post-notes">Save</small></a>
+      <a class='bsave'><small class="gray db pv2 post-notes">Save Post</small></a>
     </div>
   </article>`].join(""));
+  // console.log("post.id here ", post._id);
     panel.data("_id", post._id);
     return panel;
   }
