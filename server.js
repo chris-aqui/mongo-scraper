@@ -31,7 +31,7 @@ app.use(bodyParser.urlencoded({
 // require models
 const db = require("./models");
 // if deployed, use the deployed database. otherwire use the local mongo database
-const usedDB = process.env.MONGODB_URL || "mongodb://localhost/roomrave";
+const usedDB = process.env.MONGODB_URI || "mongodb://localhost/roomrave";
 
 // Connect mongoose to our database
 mongoose.connect(usedDB, function(error){
