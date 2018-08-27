@@ -17,7 +17,7 @@ $(document).ready(function () {
     // clear out the webpage
     postContainer.empty();
     // next run an AJAX request and get any saved post
-    $.get('/api/post?saved=true').then(function (data) {
+    $.get('/api/post?saved=tru').then(function (data) {
       // if data a post was saved  then render it
       if (data && data.length) {
         console.log("There is some saved data ", data);
@@ -71,6 +71,7 @@ $(document).ready(function () {
     // rending the comments for the post
     let commentsToRender = [];
     let currentComment;
+    console.log("this is data at rending comment list: ", data);
     if (!data.post.length) {
       // if there is no post, just display a message
       currentComment = [
@@ -91,9 +92,24 @@ $(document).ready(function () {
         commentsToRender.push(currentComment);
       }
     }
+    // Now append the commentToRender to the post-container inside the note modal
+    $(".post-container").append(commentsToRender);
     console.log("renderCommentsList function is working!");
   }
 
+  function handlePostDelete() {
+    //  this will delete post
+    let postToDelete = $(this).parents(".panel").data();
+    $.ajax({
+      method: "DELETE",
+      url: `/api/post/${postToDelete}`
+    }).then(function (data) {
+      if (data.ok) {
+        initPage();
+      }
+    });
+    console.log("handlePostDelete function is working!");
+  }
 
   function handlePostComment() {
     // this function handles the comments modal
@@ -124,32 +140,17 @@ $(document).ready(function () {
           comments: data || []
         };
         //
-        $(".bsave").data("post", commentData);
+        $(".bsave").data("post", commentData); // check that it is post here
         renderCommentsList(commentData);
       });
     console.log("handlePostComment function is working!");
   }
 
 
-  function handlePostDelete() {
-    //  this will delete post
-    let postToDelete = $(this).parents(".panel").data();
-    $.ajax({
-      method: "DELETE",
-      url: `/api/headlines/${postToDelete}`
-    }).then(function (data) {
-      if (data.ok) {
-        initPage();
-      }
-    });
-    console.log("handlePostDelete function is working!");
-  }
-
-
   function handleCommentSave() {
     //  this function will trigger when the user wants to save a post
     let commentData;
-    let newComment = $("bootbox-body comment").val().trim();
+    let newComment = $(".bootbox-body comment").val().trim();
     if (newComment) {
       commentData = {
         _id: $(this).data("post")._id,

@@ -28,15 +28,13 @@ const ArticleSchema = new Schema({
   saved: {
     type: Boolean,
     default: false,
-    required: true
+    // required: true
   },
   // link to comment model/table by using the ref and saving an obj id with it. it's an array of objects so that we can have many comments
-  comments: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Comment"
-    }
-  ]
+  comments: [{
+    type: Schema.Types.ObjectId,
+    ref: "Comment"
+  }]
 
 });
 

@@ -40,6 +40,27 @@ $(document).ready(function () {
     console.log("renderPost function is working!");
   }
 
+  function createPanel(post) {
+    console.log("createPanel function is working!");
+    // console.log('creating the paenl with ', post);
+    let panel =
+      $([`
+    <article id="${post._id}" class="panel bg-white mw5 ba b--black-10 mv4">
+    <div class="pv2 ph3">
+      <h1 class="f6 ttu tracked"></h1>
+    </div>
+    <img src="${post.image}" class="w-100 db" alt="room image">
+    <div class="pa3">
+      <h3 href="#" class="link dim lh-title">${post.title}</h3>
+      <small class="gray db pv2">By: ${post.author}</small>
+      <a class='bsave'><small class="gray db pv2 post-notes">Save Post</small></a>
+    </div>
+  </article>`].join(""));
+    // console.log("post.id here ", post._id);
+    panel.data("_id", post._id);
+    return panel;
+  }
+
   function renderEmpty() {
     let emptyAlert =
       $([`<section class="ph3 ph5-ns pv5">
@@ -95,28 +116,7 @@ $(document).ready(function () {
     $.get("/api/fetch")
       .then(function (data) {
         initPage();
-        bootbox.alert("<h3>`data.message`</h3>")
+        bootbox.alert(`<h3>${data.message}</h3>`)
       });
-  }
-
-  function createPanel(post) {
-    console.log("createPanel function is working!");
-    // console.log('creating the paenl with ', post);
-    let panel =
-      $([`
-    <article id="${post._id}" class="panel bg-white mw5 ba b--black-10 mv4">
-    <div class="pv2 ph3">
-      <h1 class="f6 ttu tracked"></h1>
-    </div>
-    <img src="${post.image}" class="w-100 db" alt="room image">
-    <div class="pa3">
-      <h3 href="#" class="link dim lh-title">${post.title}</h3>
-      <small class="gray db pv2">By: ${post.author}</small>
-      <a class='bsave'><small class="gray db pv2 post-notes">Save Post</small></a>
-    </div>
-  </article>`].join(""));
-    // console.log("post.id here ", post._id);
-    panel.data("_id", post._id);
-    return panel;
   }
 });

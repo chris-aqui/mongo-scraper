@@ -43,7 +43,7 @@ module.exports = function (router) {
     //  query is defined as empty.
     //  if the user does not query anything then we return all the date.
     //  if the user picks a specific post then we return that
-    query = {};
+    let query = {};
     if (req.query.saved) {
       query = req.query;
       console.log(`This is the query inside the routes call to the get method ${query}`);
@@ -75,7 +75,7 @@ module.exports = function (router) {
     console.log("queryUpdate ", queryUpdate);
     articleController.update(queryUpdate, function (err, data) {
       if (err) throw err;
-      res.json(data);
+      res.status(200).json(data);
     });
   });
 
