@@ -32,8 +32,9 @@ $(document).ready(function () {
     // this function will handle the appending HTML for the post
     // passing an array of json with all the post in the db
     let postPanels = [];
-    postPanels.forEach(element => {
-      postPanels.push(createPanel(posts));
+    posts.forEach(element => {
+      postPanels.push(createPanel(element));
+      console.log("this element is being created", element);
     });
     postContainer.append(postPanels);
     console.log("renderPost function is working!");
@@ -41,9 +42,8 @@ $(document).ready(function () {
 
   function renderEmpty() {
     let emptyAlert =
-      $([`
-    <section class="ph3 ph5-ns pv5">
-  <article class="mw8 center br2 ba b--light-blue bg-lightest-blue">
+      $([`<section class="ph3 ph5-ns pv5">
+          <article class="mw8 center br2 ba b--light-blue bg-lightest-blue">
     <div class="dt-ns dt--fixed-ns w-100">
       <div class="pa3 pa4-ns dtc-ns v-mid">
         <div>
@@ -61,8 +61,7 @@ $(document).ready(function () {
       </div>
     </div>
   </article>
-</section>
-    `].join(""));
+        </section>`].join(""));
     postContainer.append(emptyAlert);
     console.log("renderEmpty function is working!");
   }
@@ -113,7 +112,7 @@ $(document).ready(function () {
       <a href="#" class='bsave'><small class="gray db pv2 post-notes">Save</small></a>
     </div>
   </article>`].join(""));
-  panel.data("_id", post._id);
-  return panel;
+    panel.data("_id", post._id);
+    return panel;
   }
 });
