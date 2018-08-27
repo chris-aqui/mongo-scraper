@@ -101,15 +101,15 @@ $(document).ready(function () {
     console.log("createPanel function is working!");
     let panel =
       $([`
-    <article id="${post.id}" class="bg-white mw5 ba b--black-10 mv4">
+    <article id="${post.id}" class="panel bg-white mw5 ba b--black-10 mv4">
     <div class="pv2 ph3">
       <h1 class="f6 ttu tracked"></h1>
     </div>
     <img src="${post.image}" class="w-100 db" alt="room image">
     <div class="pa3">
       <h3 href="#" class="link dim lh-title">${post.title}</h3>
-      <small class="gray db pv2">${post.author}</small>
-      <a href="#" class='bsave'><small class="gray db pv2 post-notes">Save</small></a>
+      <small class="gray db pv2">By: ${post.author}</small>
+      <a class='bsave'><small class="bsave gray db pv2 post-notes">Save</small></a>
     </div>
   </article>`].join(""));
     panel.data("_id", post._id);

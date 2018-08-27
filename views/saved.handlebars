@@ -1,20 +1,17 @@
-<link rel="stylesheet" href="/css/save.css">
-<div class="subHeading">
-  <h1>Saved Post</h1>
-  <h4>You can delete post here.</h4>
+<header class="fixed w-100 ph3 pv3 pv4-ns ph4-m ph5-l">
+  <nav class="pa3 pa4-ns">
+    <a class="link dim black b f6 f5-ns dib mr3" href="/" title="Home">Room Rave</a>
+    <a class="link dim gray    f6 f5-ns dib mr3" href="/" title="Home">Home</a>
+    <a class="link dim gray    f6 f5-ns dib mr3" href="/saved" title="Home">Saved</a>
+  </nav>
+</header>
+
+<div class="container">
+  <div class="itemsCards"></div>
 </div>
-<div class='itemsCards'>
-  {{#each values}}
-  <article id="{{this.id}}" class="bg-white mw5 ba b--black-10 mv4">
-    <div class="pv2 ph3">
-      <h1 class="f6 ttu tracked"></h1>
-    </div>
-    <img src="{{this.image}}" class="w-100 db" alt="room image">
-    <div class="pa3">
-      <a href="#" class="link dim lh-title">{{this.title}}</a>
-      <small class="gray db pv2">{{this.author}}</small>
-      <a href="/comments"><small class="gray db pv2">Comments</small></a>
-    </div>
-  </article>
-  {{/each}}
-</div>
+
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script> {{!--
+<script src="./js/index.js"></script> --}}
+<script src="./js/saved.js"></script>
