@@ -41,7 +41,8 @@ mongoose.connect(usedDB, {
   if (error) throw (`There is a connection error of: ${error}`);
   // show a success message if connected
   // console.log("db in server is ", db);
-  console.log("mongoose connection is good")
+  console.log(`Mongoose connection to ${usedDB}`);
+  db.close();
 });
 // Routes + Handlebars
 // =============================================================
