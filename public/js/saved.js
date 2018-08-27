@@ -1,11 +1,13 @@
-console.log("connected to indexjs");
+console.log("connected to savedjs");
 $(document).ready(function () {
   //  get the div where all my data will go
   let postContainer = $(".itemsCards");
 
   // events for post/comments being saved and deleted
+  $(document).on('click', '.bdelete', handlePostDelete);
+  $(document).on('click', '.bcomment', handlePostComment);
   $(document).on('click', '.bsave', handlePostSave);
-  $(document).on('click', '.bscrape', handlePostscrap);
+  $(document).on('click', '.bcommentDelete', handleCommentDelete);
 
   // next we init the page
   initPage();
@@ -42,27 +44,27 @@ $(document).ready(function () {
   function renderEmpty() {
     let emptyAlert =
       $([`
-    <section class="ph3 ph5-ns pv5">
-  <article class="mw8 center br2 ba b--light-blue bg-lightest-blue">
-    <div class="dt-ns dt--fixed-ns w-100">
-      <div class="pa3 pa4-ns dtc-ns v-mid">
-        <div>
-          <h2 class="fw4 blue mt0 mb3">No new post</h2>
-          <p class="black-70 measure lh-copy mv0">
-            Would you like to look at new stuff?
-          </p>
+      <section class="ph3 ph5-ns pv5">
+    <article class="mw8 center br2 ba b--light-blue bg-lightest-blue">
+      <div class="dt-ns dt--fixed-ns w-100">
+        <div class="pa3 pa4-ns dtc-ns v-mid">
+          <div>
+            <h2 class="fw4 blue mt0 mb3">No new post</h2>
+            <p class="black-70 measure lh-copy mv0">
+              Would you like to look at new stuff?
+            </p>
+          </div>
+        </div>
+        <div class="pa3 pa4-ns dtc-ns v-mid">
+          <a class="bscrape no-underline f6 tc db w-100 pv3 bg-animate bg-blue hover-bg-dark-blue white br2">Get New Post</a>
+        </div>
+        <div class="pa3 pa4-ns dtc-ns v-mid">
+          <a href="/saved" class="bsave no-underline f6 tc db w-100 pv3 bg-animate bg-blue hover-bg-dark-blue white br2">Browse Saved Post</a>
         </div>
       </div>
-      <div class="pa3 pa4-ns dtc-ns v-mid">
-        <a class="bscrape no-underline f6 tc db w-100 pv3 bg-animate bg-blue hover-bg-dark-blue white br2">Get New Post</a>
-      </div>
-      <div class="pa3 pa4-ns dtc-ns v-mid">
-        <a href="/saved" class="bsave no-underline f6 tc db w-100 pv3 bg-animate bg-blue hover-bg-dark-blue white br2">Browse Saved Post</a>
-      </div>
-    </div>
-  </article>
-</section>
-    `].join(""));
+    </article>
+  </section>
+      `].join(""));
     postContainer.append(emptyAlert);
     console.log("renderEmpty function is working!");
   }
@@ -102,18 +104,18 @@ $(document).ready(function () {
     console.log("createPanel function is working!");
     let panel =
       $([`
-    <article id="${post.id}" class="bg-white mw5 ba b--black-10 mv4">
-    <div class="pv2 ph3">
-      <h1 class="f6 ttu tracked"></h1>
-    </div>
-    <img src="${post.image}" class="w-100 db" alt="room image">
-    <div class="pa3">
-      <h3 href="#" class="link dim lh-title">${post.title}</h3>
-      <small class="gray db pv2">${post.author}</small>
-      <a href="#" class='bsave'><small class="gray db pv2 post-notes">Save</small></a>
-    </div>
-  </article>`].join(""));
-  panel.data("_id", post._id);
-  return panel;
+      <article id="${post.id}" class="bg-white mw5 ba b--black-10 mv4">
+      <div class="pv2 ph3">
+        <h1 class="f6 ttu tracked"></h1>
+      </div>
+      <img src="${post.image}" class="w-100 db" alt="room image">
+      <div class="pa3">
+        <h3 href="#" class="link dim lh-title">${post.title}</h3>
+        <small class="gray db pv2">${post.author}</small>
+        <a href="#" class='bsave'><small class="gray db pv2 post-notes">Save</small></a>
+      </div>
+    </article>`].join(""));
+    panel.data("_id", post._id);
+    return panel;
   }
 });

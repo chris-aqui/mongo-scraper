@@ -39,7 +39,7 @@ module.exports = function (router) {
   router.get("/api/post", function (req, res) {
     //  query is defined as empty.
     //  if the user does not uery anything then we retuen all the date.
-    const query = {};
+    let query = {};
     //  if theuser picks a specifie post then we returen that
     if (req.query.saved) {
       query = req.query;
@@ -52,7 +52,7 @@ module.exports = function (router) {
   });
 
   router.delete("/api/delete/:id", function (req, res) {
-    const query = {};
+    let query = {};
     query._id = req.params.id;
     articleController.delete(query, function (err, data) {
       res.json(data);
@@ -68,7 +68,7 @@ module.exports = function (router) {
 
   // on post at that id
   router.get("/api/comments/:article_id", function (req, res) {
-    const query = {};
+    let query = {};
     if (req.params.article_id) {
       query.id = req.params.article_id;
     };
@@ -80,7 +80,7 @@ module.exports = function (router) {
 
   // delete post at that id
   router.delete("/api/post/:id", function (req, res) {
-    const query = {};
+    let query = {};
     query._id = req.params.id;
     commentController.delete(query, function (err, data) {
       res.json(data);
