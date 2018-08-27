@@ -32,17 +32,18 @@ module.exports = {
     // pass them to the callback
     Article.find(query)
     .sort({
-      _id:-1
+      _id: -1
     })
     .exec(function(err,doc){
       cb(doc)
     })
   },
   update: function(query, cb){
+    // console.log("this method for update with qurey ",query);
     // update new post scraped with the id
     // update any id passed to the post with tat data
-    Article.update({_id: query._id},{
-      $set:query
+    Article.update({_id: query._id}, {
+      $set: query
     }, {}, cb);
   }
 }

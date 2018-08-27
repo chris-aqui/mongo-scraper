@@ -49,7 +49,7 @@ $(document).ready(function () {
       <div class="dt-ns dt--fixed-ns w-100">
         <div class="pa3 pa4-ns dtc-ns v-mid">
           <div>
-            <h2 class="fw4 blue mt0 mb3">No SAved post</h2>
+            <h2 class="fw4 blue mt0 mb3">No Saved post</h2>
             <p class="black-70 measure lh-copy mv0">
               What would you like to do?
             </p>

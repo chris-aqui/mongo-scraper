@@ -23,10 +23,10 @@ const router = express.Router();
 app.use(router);
 
 // Sets up the Express app to handle data parsing
-app.use(bodyParser.urlencoded({
-  extended: false
-}));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
 // require models
 const db = require("./models");

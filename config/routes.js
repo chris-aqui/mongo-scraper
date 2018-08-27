@@ -22,6 +22,7 @@ module.exports = function (router) {
   router.get("/api/fetch", function (req, res) {
     // this is the fetch method define inside the controlers
     articleController.fetch(function (err, docs) {
+      if (err) throw err;
       // check if scrape failed or no new content
       if (!docs || docs.insertedCount === 0) {
         res.json({
@@ -51,10 +52,11 @@ module.exports = function (router) {
 
   });
 
-  router.delete("/api/delete/:id", function (req, res) {
+  router.delete("/api/post/:id", function (req, res) {
     let query = {};
     query._id = req.params.id;
     articleController.delete(query, function (err, data) {
+      if (err) throw err;
       res.json(data);
     });
   });
@@ -74,15 +76,17 @@ module.exports = function (router) {
     };
     // get post at that id
     commentController.get(query, function (err, data) {
+      if (err) throw err;
       res.json(data);
     })
   })
 
   // delete post at that id
-  router.delete("/api/post/:id", function (req, res) {
+  router.delete("/api/comments/:id", function (req, res) {
     let query = {};
     query._id = req.params.id;
     commentController.delete(query, function (err, data) {
+      if (err) throw err;
       res.json(data);
     })
   })

@@ -11,7 +11,7 @@ const CommentSchema = new Schema({
     ref:"Article"
   },
   // `body` is of type String
-  body: {
+  commentText: {
     type: String,
     validate: [
       function(input) {

@@ -34,7 +34,7 @@ $(document).ready(function () {
     let postPanels = [];
     posts.forEach(element => {
       postPanels.push(createPanel(element));
-      console.log("this element is being created", element);
+      // console.log("this element is being created", element);
     });
     postContainer.append(postPanels);
     console.log("renderPost function is working!");
@@ -57,7 +57,7 @@ $(document).ready(function () {
         <a class="bscrape no-underline f6 tc db w-100 pv3 bg-animate bg-blue hover-bg-dark-blue white br2">Get New Post</a>
       </div>
       <div class="pa3 pa4-ns dtc-ns v-mid">
-        <a href="/saved" class="bsave no-underline f6 tc db w-100 pv3 bg-animate bg-blue hover-bg-dark-blue white br2">Browse Saved Post</a>
+        <a href="/saved" class="no-underline f6 tc db w-100 pv3 bg-animate bg-blue hover-bg-dark-blue white br2">Browse Saved Post</a>
       </div>
     </div>
   </article>
@@ -67,9 +67,10 @@ $(document).ready(function () {
   }
 
   function handlePostSave() {
+    console.log("attemping to save a post");
     //  this function will trigger when the user wants to save a post
     let postToSave = $(this).parents(".panel").data();
-    // console.log(postToSave);
+    console.log("postToSave",postToSave);
     postToSave.saved = true;
     // using ajax request, we patch our eisting records inthe collection
     $.ajax({
@@ -78,6 +79,7 @@ $(document).ready(function () {
         data: postToSave
       })
       .then(function (data) {
+        console.log('saving a post');
         // if successful then mongoose will send back an object.
         //  this obj will have the key "ok" with the value of 1
         // console.log(data);
@@ -109,7 +111,7 @@ $(document).ready(function () {
     <div class="pa3">
       <h3 href="#" class="link dim lh-title">${post.title}</h3>
       <small class="gray db pv2">By: ${post.author}</small>
-      <a class='bsave'><small class="bsave gray db pv2 post-notes">Save</small></a>
+      <a class='bsave'><small class="gray db pv2 post-notes">Save</small></a>
     </div>
   </article>`].join(""));
     panel.data("_id", post._id);

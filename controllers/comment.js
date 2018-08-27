@@ -6,15 +6,15 @@ module.exports = {
   // add all the comments related to the post
   get: function(data, cb){
     Comment.finc({
-      _articleId:data._id
+      _articleId: data._id
     },cb);
   },
   save: function(data, cb){
     // create an object for the new comment
     var newComment = {
-      _articleId:data._id,
+      _articleId: data._id,
       data:makeDate(),
-      body: data.body
+      commentText: data.commentText // body
     };
     // next create the comment in the db
     Comment.create(newComment, function(err,doc){
@@ -25,8 +25,6 @@ module.exports = {
   },
   delete: function(data, cb){
     // rmeove comments with the id
-    Comment.remove({
-      _id:data._id
-    }, cb);
+    Comment.remove({_id: data._id}, cb);
   }
 }
