@@ -43,7 +43,7 @@ mongoose.connect(usedDB, {
   // show a success message if connected
   // console.log("db in server is ", db);
   console.log(`Mongoose connection to ${usedDB}`);
-  db.close();
+  // db.close();
 });
 // Routes + Handlebars
 // =============================================================

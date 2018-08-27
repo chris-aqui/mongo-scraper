@@ -10,7 +10,7 @@ module.exports = {
   fetch: function (cb) {
     scrape(function (data) {
       var articles = data;
-      console.log("this is my articles in my controller> article.js\n", articles);
+      // console.log("this is my articles in my controller> article.js\n", articles);
       // loop over each and give a datae and set saved to false
       for (var i = 0; i < articles.length; i++) {
         articles[i].date = makeDate();
@@ -41,10 +41,11 @@ module.exports = {
       })
   },
   update: function (query, cb) {
-    console.log("this method for update with qurey ", query);
+    console.log("this method for update with qurey at id:", query);
     // update new post scraped with the id
     // update any id passed to the post with tat data
-    Article.update({
+    // aug 27 changed update to updateOne
+    Article.updateOne({
       _id: query._id
     }, {
       $set: {
