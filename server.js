@@ -34,6 +34,7 @@ const db = require("./models");
 const usedDB = process.env.MONGODB_URI || "mongodb://localhost/roomrave";
 
 // Connect mongoose to our database
+//  I can use a promise here. next updated.
 mongoose.connect(usedDB, {
   useNewUrlParser: true
 }, function (error, db) {
