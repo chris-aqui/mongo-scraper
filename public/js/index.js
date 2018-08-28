@@ -96,9 +96,9 @@ $(document).ready(function () {
     postToSave.saved = true;
     // using ajax request, we patch our  records in the collection
     $.ajax({
-      method: "PATCH",
-        url: "/api/post",
-        data: postToSave
+      method: "PUT",
+      url: "/api/post/"+postToSave._id,
+      data: postToSave
       })
       .then(function (data) {
         // console.log('saving a post with ', data);

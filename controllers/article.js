@@ -49,6 +49,6 @@ module.exports = {
     // aug 27 changed update to updateOne
     console.log("this is the article controler UPDATE query", query);
     Article.updateOne({_id: query._id}, {
-      $set: query }, {}, cb);
+      $set: query.saved }, {}, cb);
   }
 }
