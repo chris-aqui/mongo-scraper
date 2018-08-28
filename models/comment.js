@@ -18,7 +18,8 @@ const CommentSchema = new Schema({
         return input.length >= 1;
       },
       "Comment should not be blank."
-    ]
+    ],
+    date: String
   }
 });
 

@@ -15,10 +15,10 @@ $(document).ready(function () {
     // clear out the webpage
     postContainer.empty();
     // next run an AJAX request and get any saved post
-    $.get('api/post?saved=false').then(function (data) {
+    $.get('/api/post?saved=false').then(function (data) {
       // if data a post was saved  then render it
       if (data && data.length) {
-        console.log("there is some data")
+        console.log("there is some data in init")
         renderPost(data);
       } else {
         // if not then render notting
@@ -38,6 +38,28 @@ $(document).ready(function () {
     });
     postContainer.append(postPanels);
     console.log("renderPost function is working!");
+    return postPanels;
+  }
+
+  function createPanel(post) {
+    console.log("createPanel function is working!");
+    // console.log('creating the paenl with ', post);
+    let panel =
+      $([`
+    <article class="panel bg-white mw5 ba b--black-10 mv4">
+    <div class="pv2 ph3">
+      <h1 class="f6 ttu tracked"></h1>
+    </div>
+    <img src="${post.image}" class="w-100 db" alt="room image">
+    <div class="pa3">
+      <h3 href="#" class="link dim lh-title">${post.title}</h3>
+      <small class="gray db pv2">By: ${post.author}</small>
+      <a class='bsave'><small class="gray db pv2 post-notes">Save Post</small></a>
+    </div>
+  </article>`].join(""));
+    // console.log("post.id here ", post._id);
+    panel.data("_id", post._id);
+    return panel;
   }
 
   function renderEmpty() {
@@ -67,19 +89,21 @@ $(document).ready(function () {
   }
 
   function handlePostSave() {
-    console.log("attemping to save a post");
+    console.log("attempting to save a post");
     //  this function will trigger when the user wants to save a post
     let postToSave = $(this).parents(".panel").data();
-    console.log("postToSave",postToSave);
+    console.log("postToSave: ", postToSave);
     postToSave.saved = true;
-    // using ajax request, we patch our eisting records inthe collection
+    // using ajax request, we patch our  records in the collection
     $.ajax({
-        method: "PATCH",
-        url: `/api/post/${postToSave._id}`,
-        data: postToSave
+      method: "PUT",
+      contentType: "application/json",
+      dataType: "json",
+      url: "/api/post/"+postToSave._id,
+      data: JSON.stringify(postToSave)
       })
       .then(function (data) {
-        console.log('saving a post');
+        // console.log('saving a post with ', data);
         // if successful then mongoose will send back an object.
         //  this obj will have the key "ok" with the value of 1
         // console.log(data);
@@ -87,6 +111,8 @@ $(document).ready(function () {
           console.log("handlePortSave function is working!");
           initPage();
         }
+      }).catch(function (err){
+        console.log("something is very wrong on on the put  ",err);
       });
   }
 
@@ -95,28 +121,7 @@ $(document).ready(function () {
     $.get("/api/fetch")
       .then(function (data) {
         initPage();
-        bootbox.alert("<h3>`data.message`</h3>")
+        bootbox.alert(`<h3>${data.message}</h3>`)
       });
-  }
-
-  function createPanel(post) {
-    console.log("createPanel function is working!");
-    // console.log('creating the paenl with ', post);
-    let panel =
-      $([`
-    <article id="${post._id}" class="panel bg-white mw5 ba b--black-10 mv4">
-    <div class="pv2 ph3">
-      <h1 class="f6 ttu tracked"></h1>
-    </div>
-    <img src="${post.image}" class="w-100 db" alt="room image">
-    <div class="pa3">
-      <h3 href="#" class="link dim lh-title">${post.title}</h3>
-      <small class="gray db pv2">By: ${post.author}</small>
-      <a class='bsave'><small class="gray db pv2 post-notes">Save Post</small></a>
-    </div>
-  </article>`].join(""));
-  // console.log("post.id here ", post._id);
-    panel.data("_id", post._id);
-    return panel;
   }
 });

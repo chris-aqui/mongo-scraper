@@ -10,7 +10,7 @@ module.exports = {
   fetch: function (cb) {
     scrape(function (data) {
       var articles = data;
-      console.log("this is my articles in my controller> article.js\n", articles);
+      // console.log("this is my articles in my controller> article.js\n", articles);
       // loop over each and give a datae and set saved to false
       for (var i = 0; i < articles.length; i++) {
         articles[i].date = makeDate();
@@ -32,24 +32,23 @@ module.exports = {
     // find all the port in the query
     // sort more recent to lest recent
     // pass them to the callback
+    // console.log(`This is the article get method for query: ${query}`)
     Article.find(query)
       .sort({
         _id: -1
       })
       .exec(function (err, doc) {
+        if (err) throw ('Error in the article controler GET',err);
         cb(doc)
       })
   },
   update: function (query, cb) {
-    console.log("this method for update with qurey ", query);
+    // console.log("this method for update with query at id:", query);
     // update new post scraped with the id
     // update any id passed to the post with tat data
-    Article.update({
-      _id: query._id
-    }, {
-      $set: {
-        _id: query._id
-      }
-    }, {}, cb);
+    // aug 27 changed update to updateOne
+    console.log("this is the article controler UPDATE query", query);
+    Article.updateOne({_id: query._id}, {
+      $set: {saved: query.saved} }, {}, cb);
   }
 }

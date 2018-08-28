@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 // Using the Schema constructor
 // Create a new UserSchema object
 // This is similar to a Sequelize model
-const ArticleSchema = new Schema({
+const articleSchema = new Schema({
   // `title` is required and of type String
   title: {
     type: String,
@@ -18,6 +18,7 @@ const ArticleSchema = new Schema({
     type: String,
     required: true
   },
+  date: String,
   // image link
   image: {
     type: String,
@@ -27,21 +28,20 @@ const ArticleSchema = new Schema({
   // defines whether or not article is saved
   saved: {
     type: Boolean,
-    default: false,
-    required: true
-  },
+    default: false
+  }
+    // required: true
+  // },
   // link to comment model/table by using the ref and saving an obj id with it. it's an array of objects so that we can have many comments
-  comments: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Comment"
-    }
-  ]
+  // comments: [{
+  //   type: Schema.Types.ObjectId,
+  //   ref: "Comment"
+  // }]
 
 });
 
 // This creates our model from the above schema, using mongoose's model method
-const Article = mongoose.model("Article", ArticleSchema);
+const Article = mongoose.model("Article", articleSchema);
 
 // Export the Article model
 module.exports = Article;

@@ -6,7 +6,7 @@ $(document).ready(function () {
   // events for post/comments being saved and deleted
   $(document).on('click', '.bdelete', handlePostDelete);
   $(document).on('click', '.bcomment', handlePostComment);
-  $(document).on('click', '.bsave', handleCommentsSave);
+  $(document).on('click', '.bsave', handleCommentSave);
   $(document).on('click', '.bcommentDelete', handleCommentDelete);
 
   // next we init the page
@@ -17,14 +17,14 @@ $(document).ready(function () {
     // clear out the webpage
     postContainer.empty();
     // next run an AJAX request and get any saved post
-    $.get('api/post?saved=true').then(function (data) {
+    $.get('/api/post?saved=true').then(function (data) {
       // if data a post was saved  then render it
       if (data && data.length) {
-        console.log("there is some saved data")
+        console.log("There is some saved data ", data);
         renderPost(data);
       } else {
         // if not then render notting
-        console.log("there is no  saved data")
+        console.log("There is no  saved data")
         renderEmpty();
       }
     });
@@ -34,8 +34,8 @@ $(document).ready(function () {
     // this function will handle the appending HTML for the post
     // passing an array of json with all the post in the db
     let postPanels = [];
-    postPanels.forEach(element => {
-      postPanels.push(createPanel(posts));
+    posts.forEach(element => {
+      postPanels.push(createPanel(element));
     });
     postContainer.append(postPanels);
     console.log("renderPost function is working!");
@@ -68,9 +68,10 @@ $(document).ready(function () {
   //  ////////////////////////////////////////////////////
 
   function renderCommentsList(data) {
-    // rendings the comments for the post
+    // rending the comments for the post
     let commentsToRender = [];
     let currentComment;
+    console.log("this is data at rending comment list: ", data);
     if (!data.post.length) {
       // if there is no post, just display a message
       currentComment = [
@@ -83,20 +84,35 @@ $(document).ready(function () {
         currentComment = $([
           `<li class='list-group-item comment'>
           ${data.post[i].commentText}
-          <buttin class='bcommentDelete'>X</buttin>
+          <button class='bcommentDelete'>X</button>
           </li>`
         ].join(""));
-        // store the coment id on the delete button
+        // store the comment id on the delete button
         currentComment.children("button").data("_id", data.post[i]._id);
         commentsToRender.push(currentComment);
       }
     }
+    // Now append the commentToRender to the post-container inside the note modal
+    $(".post-container").append(commentsToRender);
     console.log("renderCommentsList function is working!");
   }
 
+  function handlePostDelete() {
+    //  this will delete post
+    let postToDelete = $(this).parents(".panel").data();
+    $.ajax({
+      method: "DELETE",
+      url: `/api/post/${postToDelete._id}`
+    }).then(function (data) {
+      if (data.ok) {
+        initPage();
+      }
+    });
+    console.log("handlePostDelete function is working!");
+  }
 
   function handlePostComment() {
-    // this function hanles the comments modal
+    // this function handles the comments modal
     // displays the notes
     let currentPost = $(this).parents(".panel").data();
     // grab any post with the id
@@ -124,32 +140,17 @@ $(document).ready(function () {
           comments: data || []
         };
         //
-        $(".bsave").data("post", commentData);
+        $(".bsave").data("post", commentData); // check that it is post here
         renderCommentsList(commentData);
       });
     console.log("handlePostComment function is working!");
   }
 
 
-  function handlePostDelete() {
-    //  this will delete post
-    let postToDelete = $(this).parents(".panel").data();
-    $.ajax({
-      method: "DELETE",
-      url: `/api/headlines/${postToDelete}`
-    }).then(function (data) {
-      if (data.ok) {
-        initPage();
-      }
-    });
-    console.log("handlePostDelete function is working!");
-  }
-
-
-  function handleCommentsSave() {
+  function handleCommentSave() {
     //  this function will trigger when the user wants to save a post
     let commentData;
-    let newComment = $("bootbox-body comment").val().trim();
+    let newComment = $(".bootbox-body comment").val().trim();
     if (newComment) {
       commentData = {
         _id: $(this).data("post")._id,
@@ -157,41 +158,37 @@ $(document).ready(function () {
       };
       $.post("/api/comments", commentData).then(function () {
         bootbox.hideAll();
-      })
+      });
     }
-
-    console.log("handleCommentsSave function is working!");
+    console.log("handleCommentSave function is working!");
   }
 
   function handleCommentDelete() {
     let commentToDelete = $(this).data("_id");
     $.ajax({
-      url:`/api/comments/${commentToDelete}`,
+      url: `/api/comments/${commentToDelete}`,
       method: "DELETE"
-    }).then(function(){
+    }).then(function () {
       bootbox.hideAll();
     });
   }
 
-
-
-
-  // function createPanel(post) {
-  //   console.log("createPanel function is working!");
-  //   let panel =
-  //     $([`
-  //     <article id="${post.id}" class="panel bg-white mw5 ba b--black-10 mv4">
-  //     <div class="pv2 ph3">
-  //       <h1 class="f6 ttu tracked"></h1>
-  //     </div>
-  //     <img src="${post.image}" class="w-100 db" alt="room image">
-  //     <div class="pa3">
-  //       <h3 href="#" class="link dim lh-title">${post.title}</h3>
-  //       <small class="gray db pv2">${post.author}</small>
-  //       <a href="#" class='bdelete'><small class="gray db pv2 post-notes">Delete</small></a>
-  //     </div>
-  //   </article>`].join(""));
-  //   panel.data("_id", post._id);
-  //   return panel;
-  // }
+  function createPanel(post) {
+    console.log("createPanel function is working!");
+    let panel =
+      $([`
+      <article id="${post.id}" class="panel bg-white mw5 ba b--black-10 mv4">
+      <div class="pv2 ph3">
+        <h1 class="f6 ttu tracked"></h1>
+      </div>
+      <img src="${post.image}" class="w-100 db" alt="room image">
+      <div class="pa3">
+        <h3 href="#" class="link dim lh-title">${post.title}</h3>
+        <small class="gray db pv2">${post.author}</small>
+        <a href="#" class='bdelete'><small class="gray db pv2 post-notes">Delete</small></a>
+      </div>
+    </article>`].join(""));
+    panel.data("_id", post._id);
+    return panel;
+  }
 });

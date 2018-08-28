@@ -10,23 +10,28 @@ const mongoose = require("mongoose");
 // const axios = require("axios");
 
 
+
 // Sets up the Express App
 // =============================================================
 const app = express();
+// Sets up the Express app to handle data parsing
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+app.use(bodyParser.json());
+
+
 const PORT = process.env.PORT || 3000;
 // Set our public folder as our static directory
 app.use(express.static("public"));
+
+
 
 // Set yp an Express Router
 const router = express.Router();
 // have every request go though through our router middleware
 app.use(router);
 
-// Sets up the Express app to handle data parsing
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
 
 // require models
 const db = require("./models");
@@ -43,7 +48,7 @@ mongoose.connect(usedDB, {
   // show a success message if connected
   // console.log("db in server is ", db);
   console.log(`Mongoose connection to ${usedDB}`);
-  db.close();
+  // db.close();
 });
 // Routes + Handlebars
 // =============================================================
