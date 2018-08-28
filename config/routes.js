@@ -73,11 +73,15 @@ module.exports = function (router) {
     console.log("queryUpdate: ", queryUpdate);
     console.log("bodyData: ", bodyData);
     // console.log("queryUpdate: ", queryUpdate);
-    articleController.update({_id: queryUpdate}, function (err, data) {
-      // if (err) throw err;
+    articleController.update(req.body, function (err, data) {
+      if (err) throw err;
       res.status(200).json(data);
     });
   });
+
+  // router.get("/api/saved/:id", function (req, res) {
+  //   console.log("something here happended");
+  // }
 
 
   // on post at that id
@@ -88,7 +92,7 @@ module.exports = function (router) {
     };
     // get post at that id
     commentController.get(query, function (err, data) {
-      // if (err) throw ("Error on the router GET comments",err);
+      if (err) throw ("Error on the router GET comments",err);
       res.json(data);
     })
   })
@@ -98,7 +102,7 @@ module.exports = function (router) {
     let query = {};
     query._id = req.params.id;
     commentController.delete(query, function (err, data) {
-      // if (err) throw err;
+      if (err) throw err;
       res.json(data);
     })
   })

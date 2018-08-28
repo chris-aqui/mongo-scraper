@@ -97,8 +97,10 @@ $(document).ready(function () {
     // using ajax request, we patch our  records in the collection
     $.ajax({
       method: "PUT",
+      contentType: "application/json",
+      dataType: "json",
       url: "/api/post/"+postToSave._id,
-      data: postToSave
+      data: JSON.stringify(postToSave)
       })
       .then(function (data) {
         // console.log('saving a post with ', data);
@@ -110,7 +112,7 @@ $(document).ready(function () {
           initPage();
         }
       }).catch(function (err){
-        console.log("something is very wron onthe put  ",err);
+        console.log("something is very wrong on on the put  ",err);
       });
   }
 
