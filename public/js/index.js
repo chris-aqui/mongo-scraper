@@ -46,7 +46,7 @@ $(document).ready(function () {
     // console.log('creating the paenl with ', post);
     let panel =
       $([`
-    <article id="${post._id}" class="panel bg-white mw5 ba b--black-10 mv4">
+    <article class="panel bg-white mw5 ba b--black-10 mv4">
     <div class="pv2 ph3">
       <h1 class="f6 ttu tracked"></h1>
     </div>
@@ -96,8 +96,8 @@ $(document).ready(function () {
     postToSave.saved = true;
     // using ajax request, we patch our  records in the collection
     $.ajax({
-        method: "PATCH",
-        url: "/api/post/"+ postToSave._id,
+      method: "PATCH",
+        url: "/api/post",
         data: postToSave
       })
       .then(function (data) {
@@ -109,6 +109,8 @@ $(document).ready(function () {
           console.log("handlePortSave function is working!");
           initPage();
         }
+      }).catch(function (err){
+        console.log("something is very wron onthe put  ",err);
       });
   }
 

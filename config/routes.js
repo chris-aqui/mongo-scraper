@@ -60,20 +60,21 @@ module.exports = function (router) {
     });
   });
 
-  // router.patch('/api/post', function (req, res) {
-  //   articleController.update(req.body, function (err, data) {
+  router.patch('/api/post', function (req, res) {
+    console.log("queryUpdate: ", req.body);
+    articleController.update(req.body, function (err, data) {
+      res.json(data);
+    });
+  });
+
+  // router.patch('/api/post/:id', function (req, res) {
+  //   let queryUpdate = req.params.id;
+  //   console.log("queryUpdate: ", queryUpdate);
+  //   articleController.update({_id: queryUpdate}, function (err, data) {
+  //     // if (err) throw err;
   //     res.status(200).json(data);
   //   });
   // });
-
-  router.patch('/api/post/:id', function (req, res) {
-    let queryUpdate = req.params.id;
-    console.log("queryUpdate: ", queryUpdate);
-    articleController.update({_id: queryUpdate}, function (err, data) {
-      // if (err) throw err;
-      res.status(200).json(data);
-    });
-  });
 
 
   // on post at that id

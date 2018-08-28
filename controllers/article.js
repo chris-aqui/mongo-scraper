@@ -47,7 +47,8 @@ module.exports = {
     // update new post scraped with the id
     // update any id passed to the post with tat data
     // aug 27 changed update to updateOne
+    console.log("this is the article controler UPDATE query", query);
     Article.updateOne({_id: query._id}, {
-      $set: {_id: query._id} }, {}, cb);
+      $set: query }, {}, cb);
   }
 }
