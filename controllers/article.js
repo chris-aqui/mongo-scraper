@@ -38,6 +38,7 @@ module.exports = {
         _id: -1
       })
       .exec(function (err, doc) {
+        if (err) throw ('Error in the article controler GET',err);
         cb(doc)
       })
   },
@@ -46,12 +47,7 @@ module.exports = {
     // update new post scraped with the id
     // update any id passed to the post with tat data
     // aug 27 changed update to updateOne
-    Article.updateOne({
-      _id: query._id
-    }, {
-      $set: {
-        _id: query._id
-      }
-    }, {}, cb);
+    Article.updateOne({_id: query._id}, {
+      $set: {_id: query._id} }, {}, cb);
   }
 }

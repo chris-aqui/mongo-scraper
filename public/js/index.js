@@ -38,6 +38,7 @@ $(document).ready(function () {
     });
     postContainer.append(postPanels);
     console.log("renderPost function is working!");
+    return postPanels;
   }
 
   function createPanel(post) {
@@ -96,7 +97,7 @@ $(document).ready(function () {
     // using ajax request, we patch our  records in the collection
     $.ajax({
         method: "PATCH",
-        url: `/api/post`,
+        url: "/api/post/"+ postToSave._id,
         data: postToSave
       })
       .then(function (data) {
@@ -106,7 +107,7 @@ $(document).ready(function () {
         // console.log(data);
         if (data.ok) {
           console.log("handlePortSave function is working!");
-          // initPage();
+          initPage();
         }
       });
   }

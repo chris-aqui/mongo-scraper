@@ -18,7 +18,7 @@ module.exports = {
     };
     // next create the comment in the db
     Comment.create(newComment, function (err, doc) {
-      if (err) throw err;
+      if (err) throw ("Error in controler comment CREATE",err);
       console.log(doc);
       cb(doc);
     })

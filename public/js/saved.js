@@ -17,7 +17,7 @@ $(document).ready(function () {
     // clear out the webpage
     postContainer.empty();
     // next run an AJAX request and get any saved post
-    $.get('/api/post?saved=tru').then(function (data) {
+    $.get('/api/post?saved=true').then(function (data) {
       // if data a post was saved  then render it
       if (data && data.length) {
         console.log("There is some saved data ", data);
@@ -102,7 +102,7 @@ $(document).ready(function () {
     let postToDelete = $(this).parents(".panel").data();
     $.ajax({
       method: "DELETE",
-      url: `/api/post/${postToDelete}`
+      url: `/api/post/${postToDelete._id}`
     }).then(function (data) {
       if (data.ok) {
         initPage();
@@ -173,25 +173,22 @@ $(document).ready(function () {
     });
   }
 
-
-
-
-  // function createPanel(post) {
-  //   console.log("createPanel function is working!");
-  //   let panel =
-  //     $([`
-  //     <article id="${post.id}" class="panel bg-white mw5 ba b--black-10 mv4">
-  //     <div class="pv2 ph3">
-  //       <h1 class="f6 ttu tracked"></h1>
-  //     </div>
-  //     <img src="${post.image}" class="w-100 db" alt="room image">
-  //     <div class="pa3">
-  //       <h3 href="#" class="link dim lh-title">${post.title}</h3>
-  //       <small class="gray db pv2">${post.author}</small>
-  //       <a href="#" class='bdelete'><small class="gray db pv2 post-notes">Delete</small></a>
-  //     </div>
-  //   </article>`].join(""));
-  //   panel.data("_id", post._id);
-  //   return panel;
-  // }
+  function createPanel(post) {
+    console.log("createPanel function is working!");
+    let panel =
+      $([`
+      <article id="${post.id}" class="panel bg-white mw5 ba b--black-10 mv4">
+      <div class="pv2 ph3">
+        <h1 class="f6 ttu tracked"></h1>
+      </div>
+      <img src="${post.image}" class="w-100 db" alt="room image">
+      <div class="pa3">
+        <h3 href="#" class="link dim lh-title">${post.title}</h3>
+        <small class="gray db pv2">${post.author}</small>
+        <a href="#" class='bdelete'><small class="gray db pv2 post-notes">Delete</small></a>
+      </div>
+    </article>`].join(""));
+    panel.data("_id", post._id);
+    return panel;
+  }
 });
